@@ -1,4 +1,4 @@
-#include "Project.h"
+#include "Project.hpp"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -8,6 +8,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
 
+	SetDragFileValidFlag(TRUE);
 
 	SetMouseDispFlag(TRUE);
 
@@ -16,8 +17,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0)
 	{
 		project->Update();
+
+		if (GetDragFileNum() > 0)
+		{
+			char FilePath[MAX_PATH];
+
+			// ドラッグ＆ドロップされたファイルのパスを取得する
+			GetDragFilePath(FilePath);
+
+			// ドラッグ＆ドロップされたファイルを画像として読み込む
+			project->DropAddInit(FilePath);
+		}
 	}
-	delete project;
+
+	POINTER_RELEASE(project);
 
 	DxLib_End();
 	return 0;

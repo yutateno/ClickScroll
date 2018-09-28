@@ -1,6 +1,8 @@
 #pragma once
 #include "DxLib.h"
 
+enum class CLICK { LEFT, RIGHT };
+
 class MouseData
 {
 private:

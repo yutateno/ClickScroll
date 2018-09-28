@@ -154,8 +154,9 @@
     <ClCompile Include="Project.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Project.h" />
+    <ClInclude Include="Input.hpp" />
+    <ClInclude Include="Project.hpp" />
+    <ClInclude Include="ProjectBase.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

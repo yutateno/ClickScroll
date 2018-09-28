@@ -1,8 +1,7 @@
-#include "Project.h"
+#include "Project.hpp"
 
 
-
-struct Project::GraphName Project::DrawClickScroll(GraphName name)
+struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 {
 	if (mouseX >= name.x && name.x + name.gSizeX >= mouseX
 		&& mouseY >= name.y && name.y + name.gSizeY >= mouseY)
@@ -22,13 +21,13 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 		if (mouseX >= name.x && name.x + SIZE_CHANGE_AREASIZE >= mouseX)
 		{
 			name.sizeChangeLeftOn = true;
-			if (MouseData::GetClick(0) == 1)
+			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.sizeChangeLeftTouchOn = true;
 				name.clickscroll = true;
 				premouseX = mouseX;
 			}
-			else if (MouseData::GetClick(0) == 0)
+			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.sizeChangeLeftTouchOn = false;
 				name.clickscroll = false;
@@ -41,13 +40,13 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 		if (mouseX <= name.x + name.gSizeX && name.x + name.gSizeX - SIZE_CHANGE_AREASIZE <= mouseX)
 		{
 			name.sizeChangeRightOn = true;
-			if (MouseData::GetClick(0) == 1)
+			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.sizeChangeRightTouchOn = true;
 				name.clickscroll = true;
 				premouseX = mouseX;
 			}
-			else if (MouseData::GetClick(0) == 0)
+			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.sizeChangeRightTouchOn = false;
 				name.clickscroll = false;
@@ -60,13 +59,13 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 		if (mouseY >= name.y && name.y + SIZE_CHANGE_AREASIZE >= mouseY)
 		{
 			name.sizeChangeUpOn = true;
-			if (MouseData::GetClick(0) == 1)
+			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.sizeChangeUpTouchOn = true;
 				name.clickscroll = true;
 				premouseY = mouseY;
 			}
-			else if (MouseData::GetClick(0) == 0)
+			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.sizeChangeUpTouchOn = false;
 				name.clickscroll = false;
@@ -79,13 +78,13 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 		if (mouseY <= name.y + name.gSizeY && name.y + name.gSizeY - SIZE_CHANGE_AREASIZE <= mouseY)
 		{
 			name.sizeChangeDownOn = true;
-			if (MouseData::GetClick(0) == 1)
+			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.sizeChangeDownTouchOn = true;
 				name.clickscroll = true;
 				premouseY = mouseY;
 			}
-			else if (MouseData::GetClick(0) == 0)
+			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.sizeChangeDownTouchOn = false;
 				name.clickscroll = false;
@@ -98,14 +97,14 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 		if (mouseX > name.x + SIZE_CHANGE_AREASIZE && name.x + name.gSizeX - SIZE_CHANGE_AREASIZE > mouseX
 			&& mouseY > name.y + SIZE_CHANGE_AREASIZE && name.y + name.gSizeY - SIZE_CHANGE_AREASIZE > mouseY)
 		{
-			if (MouseData::GetClick(0) == 1)
+			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.touchON = true;
 				name.clickscroll = true;
 				premouseX = mouseX;
 				premouseY = mouseY;
 			}
-			else if (MouseData::GetClick(0) == 0)
+			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.touchON = false;
 				name.clickscroll = false;
@@ -125,7 +124,7 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 		name.y += (mouseY - premouseY);
 		name.gSizeY -= (mouseY - premouseY);
 		premouseY = mouseY;
-		if (MouseData::GetClick(0) == 0
+		if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0
 			&& (mouseX < name.x || name.x + name.gSizeX < mouseX))
 		{
 			name.sizeChangeUpTouchOn = false;
@@ -136,7 +135,7 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 	{
 		name.gSizeY += (mouseY - premouseY);
 		premouseY = mouseY;
-		if (MouseData::GetClick(0) == 0
+		if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0
 			&& (mouseX < name.x || name.x + name.gSizeX < mouseX))
 		{
 			name.sizeChangeDownTouchOn = false;
@@ -147,7 +146,7 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 	{
 		name.gSizeX += (mouseX - premouseX);
 		premouseX = mouseX;
-		if (MouseData::GetClick(0) == 0
+		if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0
 			&& (mouseY < name.y || name.y + name.gSizeY < mouseY))
 		{
 			name.sizeChangeRightTouchOn = false;
@@ -159,7 +158,7 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 		name.x += (mouseX - premouseX);
 		name.gSizeX -= (mouseX - premouseX);
 		premouseX = mouseX;
-		if (MouseData::GetClick(0) == 0
+		if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0
 			&& (mouseY < name.y || name.y + name.gSizeY < mouseY))
 		{
 			name.sizeChangeLeftTouchOn = false;
@@ -197,52 +196,8 @@ struct Project::GraphName Project::DrawClickScroll(GraphName name)
 	return name;
 }
 
-Project::Project()
-{
-	name1.x = 0;
-	name1.y = 0;
-	name1.graph = LoadGraph("DYxusLRV4AAtPuM.jpg");
-	GetGraphSize(name1.graph, &name1.gSizeX, &name1.gSizeY);
-	name1.areaIn = false;
-	name1.touchON = false;
-	name1.sizeChangeUpOn = false;
-	name1.sizeChangeDownOn = false;
-	name1.sizeChangeRightOn = false;
-	name1.sizeChangeLeftOn = false;
-	name1.sizeChangeUpTouchOn = false;
-	name1.sizeChangeDownTouchOn = false;
-	name1.sizeChangeRightTouchOn = false;
-	name1.sizeChangeLeftTouchOn = false;
-	name1.clickscroll = false;
-	name2.x = 500;
-	name2.y = 500;
-	name2.graph = LoadGraph("DYxusLRV4AAtPuM.jpg");
-	GetGraphSize(name2.graph, &name2.gSizeX, &name2.gSizeY);
-	name2.areaIn = false;
-	name2.touchON = false;
-	name2.sizeChangeUpOn = false;
-	name2.sizeChangeDownOn = false;
-	name2.sizeChangeRightOn = false;
-	name2.sizeChangeLeftOn = false;
-	name2.sizeChangeUpTouchOn = false;
-	name2.sizeChangeDownTouchOn = false;
-	name2.sizeChangeRightTouchOn = false;
-	name2.sizeChangeLeftTouchOn = false;
-	name2.clickscroll = false;
-	GetMousePoint(&mouseX, &mouseY);
-	premouseX = mouseX;
-	premouseY = mouseY;
-	cursor = GetCursor();
-}
 
-
-Project::~Project()
-{
-	DeleteGraph(name1.graph);
-	DeleteGraph(name2.graph);
-}
-
-void Project::Draw(GraphName name)
+void Project::Draw(GraphName &name)
 {
 	if (name.areaIn && !name.touchON)
 	{
@@ -258,49 +213,148 @@ void Project::Draw(GraphName name)
 	}
 	DrawExtendGraph(name.x, name.y, name.x + name.gSizeX, name.y + name.gSizeY, name.graph, true);
 
-	DrawFormatString(0, 0, 255, "%d", name1.areaIn);
-	DrawFormatString(0, 50, 255, "%d", name2.areaIn);
+#ifdef _DEBUG
+	DrawFormatString(0, 0, 255, "%d", v_anyGraph[0].areaIn);
+	DrawFormatString(0, 50, 255, "%d", v_anyGraph[1].areaIn);
+#endif // _DEBUG
 }
 
-void Project::Process(GraphName name)
+
+void Project::Process()
 {
 	GetMousePoint(&mouseX, &mouseY);
+}
+
+
+
+Project::Project()
+{
+	GraphName name;
+	name.x = 0;
+	name.y = 0;
+	name.areaIn = false;
+	name.touchON = false;
+	name.sizeChangeUpOn = false;
+	name.sizeChangeDownOn = false;
+	name.sizeChangeRightOn = false;
+	name.sizeChangeLeftOn = false;
+	name.sizeChangeUpTouchOn = false;
+	name.sizeChangeDownTouchOn = false;
+	name.sizeChangeRightTouchOn = false;
+	name.sizeChangeLeftTouchOn = false;
+	name.clickscroll = false;
+
+	for (int i = 0; i != graphNum; ++i)
+	{
+		v_anyGraph.push_back(name);
+	}
+
+	v_anyGraph[0].graph = LoadGraph("0.png");
+	v_anyGraph[1].graph = LoadGraph("1.png");
+	v_anyGraph[2].graph = LoadGraph("2.png");
+
+	for (int i = 0; i != graphNum; ++i)
+	{
+		GetGraphSize(v_anyGraph[i].graph, &v_anyGraph[i].gSizeX, &v_anyGraph[i].gSizeY);
+	}
+
+
+	GetMousePoint(&mouseX, &mouseY);
+	premouseX = mouseX;
+	premouseY = mouseY;
+
+	cursor = GetCursor();
+}
+
+
+Project::~Project()
+{
+	for (int i = 0; i != graphNum; ++i)
+	{
+		GRAPHIC_RELEASE(v_anyGraph[i].graph);
+	}	
 }
 
 void Project::Update()
 {
 	MouseData::Mouse_UpDate();
 	MouseWheelData::MouseWheel_Update();
-	name1 = DrawClickScroll(name1);
-	name2 = DrawClickScroll(name2);
-	if (name1.clickscroll && name2.clickscroll)
+
+
+	// èÛë‘ÇìæÇÈ
+	for (int i = 0; i != graphNum; ++i)
 	{
-		name1.areaIn = false;
-		name1.touchON = false;
-		name1.sizeChangeUpOn = false;
-		name1.sizeChangeDownOn = false;
-		name1.sizeChangeRightOn = false;
-		name1.sizeChangeLeftOn = false;
-		name1.sizeChangeUpTouchOn = false;
-		name1.sizeChangeDownTouchOn = false;
-		name1.sizeChangeRightTouchOn = false;
-		name1.sizeChangeLeftTouchOn = false;
+		v_anyGraph[i] = DrawClickScroll(v_anyGraph[i]);
 	}
-	Draw(name1);
-	Draw(name2);
-	Process(name1);
-	Process(name2);
-	//if (name1.touchON && name2.touchON)		// ëºÇÃëÄçÏÇ‡ìØéûëÄçÏêßå‰çlÇ¶Çƒ
-	//{
-	//	name1.touchON = false;
-	//}
-	// Ç®óVÇ—
-	if (MouseData::GetClick(1) == 1)
+
+
+	// ç≈ëOñ ÇóDêÊÇ≥ÇπÇÈ
+	for (int j = graphNum - 1; j >= 0; --j)
 	{
-		GraphName temp;
-		temp = name1;
-		name1 = name2;
-		name2 = temp;
+		if (v_anyGraph[j].clickscroll)
+		{
+			for (int i = 0; i != j; ++i)
+			{
+				if (v_anyGraph[i].clickscroll)
+				{
+					v_anyGraph[i].areaIn = false;
+					v_anyGraph[i].touchON = false;
+					v_anyGraph[i].sizeChangeUpOn = false;
+					v_anyGraph[i].sizeChangeDownOn = false;
+					v_anyGraph[i].sizeChangeRightOn = false;
+					v_anyGraph[i].sizeChangeLeftOn = false;
+					v_anyGraph[i].sizeChangeUpTouchOn = false;
+					v_anyGraph[i].sizeChangeDownTouchOn = false;
+					v_anyGraph[i].sizeChangeRightTouchOn = false;
+					v_anyGraph[i].sizeChangeLeftTouchOn = false;
+				}
+			}
+		}
+	}
+
+	// ï`âÊ
+	for (int i = 0; i != graphNum; ++i)
+	{
+		Draw(v_anyGraph[i]);
+	}
+	
+	// ÉvÉçÉZÉX
+	Process();
+
+	// ç≈ëOóÒÇïœÇ¶ÇÈ
+	if (MouseData::GetClick(static_cast<int>(CLICK::RIGHT)) == 1)
+	{
+		for (int i = 0; i != graphNum; ++i)
+		{
+			if (v_anyGraph[i].areaIn)
+			{
+				v_anyGraph.push_back(v_anyGraph[i]);
+				v_anyGraph.erase(v_anyGraph.begin() + i);
+			}
+		}
 	}
 }
 
+void Project::DropAddInit(char FilePath[])
+{
+	GraphName name;
+	name.x = 0;
+	name.y = 0;
+	name.graph = LoadGraph(FilePath);
+	GetGraphSize(name.graph, &name.gSizeX, &name.gSizeY);
+	name.areaIn = false;
+	name.touchON = false;
+	name.sizeChangeUpOn = false;
+	name.sizeChangeDownOn = false;
+	name.sizeChangeRightOn = false;
+	name.sizeChangeLeftOn = false;
+	name.sizeChangeUpTouchOn = false;
+	name.sizeChangeDownTouchOn = false;
+	name.sizeChangeRightTouchOn = false;
+	name.sizeChangeLeftTouchOn = false;
+	name.clickscroll = false;
+
+	v_anyGraph.push_back(name);
+
+	graphNum++;
+}

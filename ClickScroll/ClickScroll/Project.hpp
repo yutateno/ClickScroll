@@ -1,6 +1,9 @@
 #pragma once
 #include "DxLib.h"
-#include "Input.h"
+#include "Input.hpp"
+#include "ProjectBase.hpp"
+
+#include <vector>
 
 class Project
 {
@@ -22,17 +25,22 @@ private:
 		bool sizeChangeRightTouchOn, sizeChangeLeftTouchOn;
 		bool clickscroll;
 	};
-	GraphName name1;
-	GraphName name2;
 
-	struct GraphName DrawClickScroll(GraphName name);
+	struct GraphName DrawClickScroll(GraphName &name);
+
+	int graphNum = 3;
+
+	std::vector<GraphName> v_anyGraph;
+
+	void Draw(GraphName &name);
+	void Process();
 
 public:
 	Project();
 	~Project();
 
-	void Draw(GraphName name);
-	void Process(GraphName name);
 	void Update();
+
+	void DropAddInit(char FilePath[]);
 };
 
