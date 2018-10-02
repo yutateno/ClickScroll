@@ -197,6 +197,27 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 }
 
 
+void Project::SaveData()
+{
+	saveFile.open("Save.csv");		// ファイルオープン
+
+	if (saveFile.fail()) {	// ファイル読み込み失敗
+		DrawFormatString(0, 0, GetColor(0, 0, 0), "SaveError");
+	}
+	else {
+		// 読み込み成功
+		saveFile << "番号" << "," << "左上X" << "," << "左上Y" << "," << "右下X" << "," << "右下Y";
+		saveFile << std::endl;
+		for (int i = 0, n = static_cast<int>(v_anyGraph.size()); i < n; i++) {
+			saveFile << i << "," << v_anyGraph[i].x << ","  << v_anyGraph[i].y << "," << v_anyGraph[i].gSizeX << "," << v_anyGraph[i].gSizeY;
+			saveFile << std::endl;
+		}
+	}
+
+	// ファイルを閉じる
+	saveFile.close();
+}
+
 void Project::Draw(GraphName &name)
 {
 	if (name.areaIn && !name.touchON)
@@ -212,11 +233,6 @@ void Project::Draw(GraphName &name)
 		DrawBox(name.x - 1, name.y - 1, name.x + name.gSizeX + 1, name.y + name.gSizeY + 1, GetColor(0, 0, 255), false);
 	}
 	DrawExtendGraph(name.x, name.y, name.x + name.gSizeX, name.y + name.gSizeY, name.graph, true);
-
-#ifdef _DEBUG
-	DrawFormatString(0, 0, 255, "%d", v_anyGraph[0].areaIn);
-	DrawFormatString(0, 50, 255, "%d", v_anyGraph[1].areaIn);
-#endif // _DEBUG
 }
 
 
@@ -264,6 +280,8 @@ Project::Project()
 	premouseY = mouseY;
 
 	cursor = GetCursor();
+
+	saveCount = 0;
 }
 
 
@@ -272,7 +290,7 @@ Project::~Project()
 	for (int i = 0; i != graphNum; ++i)
 	{
 		GRAPHIC_RELEASE(v_anyGraph[i].graph);
-	}	
+	}
 }
 
 void Project::Update()
@@ -316,6 +334,7 @@ void Project::Update()
 	for (int i = 0; i != graphNum; ++i)
 	{
 		Draw(v_anyGraph[i]);
+		DrawFormatString(v_anyGraph[i].x, v_anyGraph[i].y, GetColor(0, 0, 0), "ID:%d", i);
 	}
 	
 	// プロセス
@@ -332,6 +351,22 @@ void Project::Update()
 				v_anyGraph.erase(v_anyGraph.begin() + i);
 			}
 		}
+	}
+
+
+	if (MouseData::GetClick(static_cast<int>(CLICK::RIGHT)) >= 1
+		&& MouseData::GetClick(static_cast<int>(CLICK::LEFT)) >= 1)
+	{
+		if (saveCount == 0)
+		{
+			saveCount++;
+			SaveData();
+		}
+		DrawFormatString(0, 50, GetColor(0, 0, 0), "セーブを実行しました。");
+	}
+	else
+	{
+		saveCount = 0;
 	}
 }
 

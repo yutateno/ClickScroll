@@ -4,7 +4,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	ChangeWindowMode(TRUE);
 	SetBackgroundColor(100, 100, 100);
-	SetGraphMode(1280, 640, 32);
+	SetGraphMode(1920, 1080, 32);
 	DxLib_Init();
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -12,9 +12,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	SetMouseDispFlag(TRUE);
 
+	int windowX, windowY, colorBit;
+	GetDefaultState(&windowX, &windowY, &colorBit);
+	SetGraphMode(windowX, windowY, colorBit);
+
 	Project* project = new Project();
 
-	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0)
+	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && !MouseData::GetClick(2))
 	{
 		project->Update();
 
@@ -35,3 +39,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	DxLib_End();
 	return 0;
 }
+
+
+
+/*
+マウスオンリーで行える
+左クリックで弄り、右クリックで前後の画像切り替え、左と右同時クリックでセーブ、真ん中ボタンで終了
+*/

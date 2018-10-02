@@ -3,6 +3,11 @@
 #include "Input.hpp"
 #include "ProjectBase.hpp"
 
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <sstream>
+
 #include <vector>
 
 class Project
@@ -31,6 +36,12 @@ private:
 	int graphNum = 3;
 
 	std::vector<GraphName> v_anyGraph;
+
+	std::ofstream saveFile;
+	
+	int saveCount;
+
+	void SaveData();
 
 	void Draw(GraphName &name);
 	void Process();
