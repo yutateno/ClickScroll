@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	int windowX, windowY, colorBit;
 	GetDefaultState(&windowX, &windowY, &colorBit);
-	SetGraphMode(windowX, windowY, colorBit);
+	SetWindowSize(windowX, windowY);
 
 	Project* project = new Project();
 
