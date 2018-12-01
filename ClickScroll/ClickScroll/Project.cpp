@@ -3,11 +3,13 @@
 
 struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 {
+	// マウスが画像の中に位置するとき
 	if (mouseX >= name.x && name.x + name.gSizeX >= mouseX
 		&& mouseY >= name.y && name.y + name.gSizeY >= mouseY)
 	{
 		name.areaIn = true;
 	}
+	// マウスが画像の外にいるとき
 	else
 	{
 		name.areaIn = false;
@@ -16,87 +18,120 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 		name.sizeChangeUpOn = false;
 		name.sizeChangeDownOn = false;
 	}
+
+
+	// マウスが画像の中であるとき
 	if (name.areaIn)
 	{
-		if (mouseX >= name.x && name.x + SIZE_CHANGE_AREASIZE >= mouseX)
+		// 画像の左端にマウスがあるとき
+		if (mouseX >= name.x && name.x + sizeChangeSize >= mouseX)
 		{
 			name.sizeChangeLeftOn = true;
+
+			// 左クリックしたとき
 			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.sizeChangeLeftTouchOn = true;
 				name.clickscroll = true;
 				premouseX = mouseX;
 			}
+			// 左クリックしていないとき
 			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.sizeChangeLeftTouchOn = false;
 				name.clickscroll = false;
 			}
 		}
+		// 画像の左端にマウスがない
 		else
 		{
 			name.sizeChangeLeftOn = false;
 		}
-		if (mouseX <= name.x + name.gSizeX && name.x + name.gSizeX - SIZE_CHANGE_AREASIZE <= mouseX)
+
+
+		// 画像の右端にマウスがあるとき
+		if (mouseX <= name.x + name.gSizeX && name.x + name.gSizeX - sizeChangeSize <= mouseX)
 		{
 			name.sizeChangeRightOn = true;
+
+			// 左クリックしたとき
 			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.sizeChangeRightTouchOn = true;
 				name.clickscroll = true;
 				premouseX = mouseX;
 			}
+			// 左クリックしていないとき
 			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.sizeChangeRightTouchOn = false;
 				name.clickscroll = false;
 			}
 		}
+		// 画像の右端にマウスがない
 		else
 		{
 			name.sizeChangeRightOn = false;
 		}
-		if (mouseY >= name.y && name.y + SIZE_CHANGE_AREASIZE >= mouseY)
+
+
+		// 画像の上端にマウスがあるとき
+		if (mouseY >= name.y && name.y + sizeChangeSize >= mouseY)
 		{
 			name.sizeChangeUpOn = true;
+
+			// 左クリックしたとき
 			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.sizeChangeUpTouchOn = true;
 				name.clickscroll = true;
 				premouseY = mouseY;
 			}
+			// 左クリックしていないとき
 			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.sizeChangeUpTouchOn = false;
 				name.clickscroll = false;
 			}
 		}
+		// 画像の上端にマウスがないとき
 		else
 		{
 			name.sizeChangeUpOn = false;
 		}
-		if (mouseY <= name.y + name.gSizeY && name.y + name.gSizeY - SIZE_CHANGE_AREASIZE <= mouseY)
+
+
+		// 画像の下端にマウスがあるとき
+		if (mouseY <= name.y + name.gSizeY && name.y + name.gSizeY - sizeChangeSize <= mouseY)
 		{
 			name.sizeChangeDownOn = true;
+
+			// 左クリックしたとき
 			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.sizeChangeDownTouchOn = true;
 				name.clickscroll = true;
 				premouseY = mouseY;
 			}
+			// 左クリックしていないとき
 			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.sizeChangeDownTouchOn = false;
 				name.clickscroll = false;
 			}
 		}
+		// 画像の下端にマウスがないとき
 		else
 		{
 			name.sizeChangeDownOn = false;
 		}
-		if (mouseX > name.x + SIZE_CHANGE_AREASIZE && name.x + name.gSizeX - SIZE_CHANGE_AREASIZE > mouseX
-			&& mouseY > name.y + SIZE_CHANGE_AREASIZE && name.y + name.gSizeY - SIZE_CHANGE_AREASIZE > mouseY)
+
+
+		// 画像の右下端にマウスがあるとき
+		if (mouseX > name.x + sizeChangeSize && name.x + name.gSizeX - sizeChangeSize > mouseX
+			&& mouseY > name.y + sizeChangeSize && name.y + name.gSizeY - sizeChangeSize > mouseY)
 		{
+			// 左クリックしたとき
 			if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 1)
 			{
 				name.touchON = true;
@@ -104,6 +139,7 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 				premouseX = mouseX;
 				premouseY = mouseY;
 			}
+			// 左クリックしていないとき
 			else if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0)
 			{
 				name.touchON = false;
@@ -111,6 +147,9 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 			}
 		}
 	}
+
+
+	// クリックしているとき
 	if (name.touchON)
 	{
 		name.x += (mouseX - premouseX);
@@ -119,11 +158,15 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 		premouseY = mouseY;
 	}
 
+
+	// 画像の上端にクリックしているとき
 	if (name.sizeChangeUpTouchOn)
 	{
 		name.y += (mouseY - premouseY);
 		name.gSizeY -= (mouseY - premouseY);
 		premouseY = mouseY;
+
+		// 左クリックしていなくて左右範囲内でないとき
 		if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0
 			&& (mouseX < name.x || name.x + name.gSizeX < mouseX))
 		{
@@ -131,10 +174,15 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 			name.clickscroll = false;
 		}
 	}
+
+
+	// 画像の下端にクリックしているとき
 	if (name.sizeChangeDownTouchOn)
 	{
 		name.gSizeY += (mouseY - premouseY);
 		premouseY = mouseY;
+
+		// 左クリックしていなくて左右範囲内にいないとき
 		if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0
 			&& (mouseX < name.x || name.x + name.gSizeX < mouseX))
 		{
@@ -142,10 +190,15 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 			name.clickscroll = false;
 		}
 	}
+
+
+	// 画像の右端でクリックしているとき
 	if (name.sizeChangeRightTouchOn)
 	{
 		name.gSizeX += (mouseX - premouseX);
 		premouseX = mouseX;
+
+		// 左クリックしていなくて上下範囲内にいないとき
 		if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0
 			&& (mouseY < name.y || name.y + name.gSizeY < mouseY))
 		{
@@ -153,11 +206,16 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 			name.clickscroll = false;
 		}
 	}
+
+
+	// 画像の左端でクリックしているとき
 	if (name.sizeChangeLeftTouchOn)
 	{
 		name.x += (mouseX - premouseX);
 		name.gSizeX -= (mouseX - premouseX);
 		premouseX = mouseX;
+
+		// クリックしていなくて上下範囲内にいないとき
 		if (MouseData::GetClick(static_cast<int>(CLICK::LEFT)) == 0
 			&& (mouseY < name.y || name.y + name.gSizeY < mouseY))
 		{
@@ -165,33 +223,43 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 			name.clickscroll = false;
 		}
 	}
+
+
+	/// カーソルの表示を変える--------------------------------------------
+
+	// 左下斜めの時
 	if ((name.sizeChangeDownOn && name.sizeChangeLeftOn)
 		|| (name.sizeChangeUpOn && name.sizeChangeRightOn))
 	{
 		cursor = LoadCursor(NULL, IDC_SIZENESW);
 		SetCursor(cursor);
 	}
+	// 右下斜めの時
 	else if ((name.sizeChangeDownOn && name.sizeChangeRightOn)
 		|| (name.sizeChangeUpOn && name.sizeChangeLeftOn))
 	{
 		cursor = LoadCursor(NULL, IDC_SIZENWSE);
 		SetCursor(cursor);
 	}
+	// 上下の時
 	else if (name.sizeChangeDownOn || name.sizeChangeUpOn)
 	{
 		cursor = LoadCursor(NULL, IDC_SIZENS);
 		SetCursor(cursor);
 	}
+	// 左右の時
 	else if (name.sizeChangeLeftOn || name.sizeChangeRightOn)
 	{
 		cursor = LoadCursor(NULL, IDC_SIZEWE);
 		SetCursor(cursor);
 	}
+	// 内部の時
 	else if (name.touchON)
 	{
 		cursor = LoadCursor(NULL, IDC_HAND);
 		SetCursor(cursor);
 	}
+	/// ------------------------------------------------------------------
 
 	return name;
 }
@@ -199,16 +267,21 @@ struct Project::GraphName Project::DrawClickScroll(GraphName &name)
 
 void Project::SaveData()
 {
-	saveFile.open("Save.csv");		// ファイルオープン
+	// ファイルオープン
+	saveFile.open("Save.csv");
 
-	if (saveFile.fail()) {	// ファイル読み込み失敗
+	// ファイル読み込み失敗
+	if (saveFile.fail())
+	{
 		DrawFormatString(0, 0, GetColor(0, 0, 0), "SaveError");
 	}
-	else {
+	else
+	{
 		// 読み込み成功
 		saveFile << "番号" << "," << "左上X" << "," << "左上Y" << "," << "右下X" << "," << "右下Y";
 		saveFile << std::endl;
-		for (int i = 0, n = static_cast<int>(v_anyGraph.size()); i < n; i++) {
+		for (int i = 0, n = static_cast<int>(v_anyGraph.size()); i < n; i++)
+		{
 			saveFile << i << "," << v_anyGraph[i].x << ","  << v_anyGraph[i].y << "," << v_anyGraph[i].gSizeX << "," << v_anyGraph[i].gSizeY;
 			saveFile << std::endl;
 		}
@@ -218,26 +291,36 @@ void Project::SaveData()
 	saveFile.close();
 }
 
+
 void Project::Draw(GraphName &name)
 {
+	// エリア内でクリックしていないとき
 	if (name.areaIn && !name.touchON)
 	{
 		DrawBox(name.x - 1, name.y - 1, name.x + name.gSizeX + 1, name.y + name.gSizeY + 1, GetColor(0, 255, 255), false);
 	}
+
+	// クリックしているとき
 	if (name.touchON)
 	{
 		DrawBox(name.x - 1, name.y - 1, name.x + name.gSizeX + 1, name.y + name.gSizeY + 1, GetColor(255, 0, 0), false);
 	}
+
+	// 端の選択範囲内のとき
 	if (name.sizeChangeUpTouchOn || name.sizeChangeDownTouchOn || name.sizeChangeRightTouchOn || name.sizeChangeLeftTouchOn)
 	{
 		DrawBox(name.x - 1, name.y - 1, name.x + name.gSizeX + 1, name.y + name.gSizeY + 1, GetColor(0, 0, 255), false);
 	}
+
+	// 通常表示
 	DrawExtendGraph(name.x, name.y, name.x + name.gSizeX, name.y + name.gSizeY, name.graph, true);
 }
 
 
+
 void Project::Process()
 {
+	// マウス座標取得
 	GetMousePoint(&mouseX, &mouseY);
 }
 
@@ -245,6 +328,7 @@ void Project::Process()
 
 Project::Project()
 {
+	// 画像の構造体初期化
 	GraphName name;
 	name.x = 0;
 	name.y = 0;
@@ -260,21 +344,27 @@ Project::Project()
 	name.sizeChangeLeftTouchOn = false;
 	name.clickscroll = false;
 
+	// 画像の個数
+	graphNum = 3;
+
+	// 画像の構造体初期化したものを渡す
 	for (int i = 0; i != graphNum; ++i)
 	{
 		v_anyGraph.push_back(name);
 	}
 
+	// 仮として三つだけ適当に
 	v_anyGraph[0].graph = LoadGraph("0.png");
 	v_anyGraph[1].graph = LoadGraph("1.png");
 	v_anyGraph[2].graph = LoadGraph("2.png");
 
+	// それぞれの画像サイズを取得
 	for (int i = 0; i != graphNum; ++i)
 	{
 		GetGraphSize(v_anyGraph[i].graph, &v_anyGraph[i].gSizeX, &v_anyGraph[i].gSizeY);
 	}
 
-
+	// マウスの座標取得
 	GetMousePoint(&mouseX, &mouseY);
 	premouseX = mouseX;
 	premouseY = mouseY;
@@ -292,6 +382,7 @@ Project::~Project()
 		GRAPHIC_RELEASE(v_anyGraph[i].graph);
 	}
 }
+
 
 void Project::Update()
 {

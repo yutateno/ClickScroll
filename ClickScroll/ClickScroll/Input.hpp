@@ -1,7 +1,9 @@
 #pragma once
 #include "DxLib.h"
 
+// マウスの左か右か
 enum class CLICK { LEFT, RIGHT };
+
 
 class MouseData
 {
@@ -13,8 +15,11 @@ public:
 	MouseData();
 	~MouseData();
 
-	static void Mouse_UpDate(); //マウスのクリックの状態を更新する
-	static int GetClick(int MouseCode); //マウスのクリックの状態を返す
+	//マウスのクリックの状態を更新する
+	static void Mouse_UpDate();
+
+	//マウスのクリックの状態を返す
+	static int GetClick(int MouseCode);
 };
 
 
@@ -28,6 +33,9 @@ public:
 	MouseWheelData();
 	~MouseWheelData();
 
-	static void MouseWheel_Update(); //マウスのホイールの状態を更新
-	static int GetMouseWheel(int MouseWheelCode); //マウスホイールの状態を返す
+	//マウスのホイールの状態を更新
+	static void MouseWheel_Update();
+
+	//マウスホイールの状態を返す
+	static int GetMouseWheel(int MouseWheelCode);
 };
