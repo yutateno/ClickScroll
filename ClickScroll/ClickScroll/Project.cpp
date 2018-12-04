@@ -278,11 +278,13 @@ void Project::SaveData()
 	else
 	{
 		// 読み込み成功
-		saveFile << "番号" << "," << "左上X" << "," << "左上Y" << "," << "右下X" << "," << "右下Y";
+		saveFile << "番号" << "," << "左上X" << "," << "左上Y" << "," << "右下X" << "," << "右下Y" << "," << "横サイズ" << "," << "縦サイズ";
 		saveFile << std::endl;
 		for (int i = 0, n = static_cast<int>(v_anyGraph.size()); i < n; i++)
 		{
-			saveFile << i << "," << v_anyGraph[i].x << ","  << v_anyGraph[i].y << "," << v_anyGraph[i].gSizeX << "," << v_anyGraph[i].gSizeY;
+			int tempX = v_anyGraph[i].x + v_anyGraph[i].gSizeX;
+			int tempY = v_anyGraph[i].y + v_anyGraph[i].gSizeY;
+			saveFile << i << "," << v_anyGraph[i].x << ","  << v_anyGraph[i].y << "," << tempX << "," << tempY << "," << v_anyGraph[i].gSizeX << "," << v_anyGraph[i].gSizeY;
 			saveFile << std::endl;
 		}
 	}
